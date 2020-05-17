@@ -1,5 +1,6 @@
 package br.com.teleset.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,10 +48,13 @@ public class CategoriaService {
 			repo.deleteById(id);
 		}
 		catch (DataIntegrityViolationException e) {
-			
 			throw new DataIntegrityViolationException("Não é possível excluir uma categoria que possui produtos!");
-			
 		}
+	}
+	
+	//listar tudo
+	public List<Categoria> findAll() {
+		return repo.findAll();
 	}
 
 }
