@@ -11,8 +11,8 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import br.com.teleset.domain.Categoria;
-import br.com.teleset.dto.CategoriaDTO;
 import br.com.teleset.repositories.CategoriaRepository;
+import br.com.teleset.services.exceptions.DataIntegrityException;
 import br.com.teleset.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -33,30 +33,30 @@ public class CategoriaService {
 		
 	}
 	
-	//inserir
+	//inserir categoria
 	public Categoria insert(Categoria obj) {
 		obj.setId(null);
 		return repo.save(obj);
 	}
 	
-	//update
+	//alterar categoria
 	public Categoria update(Categoria obj) {
 		find(obj.getId());
 		return repo.save(obj);
 	}
 	
-	//delete
+	//deletar categoria
 	public void delete(Integer id) {
 		find(id);
 		try {
 			repo.deleteById(id);
 		}
 		catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityViolationException("Não é possível excluir uma categoria que possui produtos!");
+			throw new DataIntegrityException("Não é possivel excluir categoria com produtos!");
 		}
 	}
 	
-	//listar tudo
+	//Mostrar todas as categorias
 	public List<Categoria> findAll() {
 		return repo.findAll();
 	}
@@ -67,8 +67,5 @@ public class CategoriaService {
 		return repo.findAll(pageRequest);
 	}
 	
-	public Categoria fromDTO(CategoriaDTO objDTO) {
-		return new Categoria(objDTO.getId(), objDTO.getNome());
-	}
 
 }
