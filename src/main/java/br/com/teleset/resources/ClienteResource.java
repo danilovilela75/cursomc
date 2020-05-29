@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.teleset.domain.Cliente;
 import br.com.teleset.dto.ClienteDTO;
+import br.com.teleset.dto.ClienteNewDTO;
 import br.com.teleset.services.ClienteService;
 
 @RestController
@@ -39,10 +40,11 @@ public class ClienteResource {
 	
 	//inserir Cliente
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody Cliente obj) {
+	public ResponseEntity<Void> insert(@RequestBody ClienteNewDTO objDTO) {
+		Cliente obj = service.fromDTO(objDTO);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-				  .path("/{id}").buildAndExpand(obj.getId()).toUri();
+				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
