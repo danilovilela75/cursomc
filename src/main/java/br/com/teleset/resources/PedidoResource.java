@@ -11,7 +11,7 @@ import br.com.teleset.domain.Pedido;
 import br.com.teleset.services.PedidoService;
 
 @RestController
-@RequestMapping(value="/pedido")
+@RequestMapping(value="/pedidos")
 public class PedidoResource {
 	
 	@Autowired
